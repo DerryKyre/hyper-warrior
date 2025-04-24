@@ -1,5 +1,7 @@
 # hyper-warrior
 
+Fixed version of this error: "Cannot read property '17010402' of undefined"
+
 NOT COMPATIBLE WITH NGSP, PR, SP...
 
 YOU NEED MY TERA-SHARED-STATE MOD FOR THIS TO WORK!! (Still need it)
