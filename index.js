@@ -512,8 +512,8 @@ module.exports = function warrior(mod) {
 	  for (let group in dpsModeRequirements) {
 		const requiredId = dpsModeRequirements[group];
 		
-		if ((isDps && !effectsMap[group][requiredId]) || (!isDps && effectsMap[group][requiredId])) {
-		  return false;
+		if ((isDps && (!effectsMap[group] || !effectsMap[group][requiredId])) || (!isDps && effectsMap[group] && effectsMap[group][requiredId])) {
+          return false;
 		}
 	  }
 	  return true;
@@ -614,4 +614,81 @@ module.exports = function warrior(mod) {
 		lastTimeout = null;
     }	
 	
+
+
+
+function castSkillSafely(skill, name = "Unknown") {
+    if (!skill || !skill.isReady) return;
+    if (mod.game.me.isCasting) {
+        mod.command.message(`[SKIP] Currently casting, can't use: ${name}`);
+        return;
+    }
+    if (mod.game.me.abnormalities[100103] && skill.id === skills.d_stance.id) return; // skip def if in assault
+    if (mod.game.me.abnormalities[100201] && skill.id === skills.a_stance.id) return; // skip assault if in def
+
+    mod.command.message(`[USE] Casting: ${name} (${skill.id})`);
+    mod.setTimeout(() => {
+        skill.cast();
+    }, 60);  // slight delay to prevent overlap
+}
+
+
+
+function handleStanceAura(dps, skills) {
+    const assaultAura = 100103;
+    const defensiveAura = 100201;
+
+    if (dps && !mod.game.me.abnormalities[assaultAura]) {
+        castSkillSafely(skills.a_stance, "Assault Stance");
+    }
+    if (!dps && !mod.game.me.abnormalities[defensiveAura]) {
+        castSkillSafely(skills.d_stance, "Defensive Stance");
+    }
+}
+
+
+
+function getDpsModeFromBuffs() {
+    if (mod.game.me.abnormalities[100103]) return true;  // Assault Stance (DPS)
+    if (mod.game.me.abnormalities[100201]) return false; // Defensive Stance (Tank)
+    return false; // fallback
+}
+
+
+
+if (global.TeraProxy.GUIMode) {
+    const SettingsUI = require('tera-mod-ui').Settings;
+    ui = new SettingsUI(mod, require('./settings_structure'), mod.settings, { height: 390 });
+    ui.on('update', settings => {
+        mod.settings = settings;
+    });
+
+    this.destructor = () => {
+        if (ui) {
+            ui.close();
+            ui = null;
+        }
+    }
+}
+
+
+
+mod.log('Hyper-Warrior mod loaded!');
+
+if (mod.command) {
+    try {
+        mod.command.add('warrior', () => {
+            options.enabled = !options.enabled;
+            mod.command.message(`warrior mod is now ${(options.enabled) ? 'en' : 'dis'}abled.`);
+        });
+    } catch (_) {}
+
+    try {
+        mod.command.add('wui', () => {
+            if (ui) ui.show();
+        });
+    } catch (_) {}
+}
+
+
 }
