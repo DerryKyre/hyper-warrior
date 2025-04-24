@@ -1,12 +1,11 @@
 # hyper-warrior
-pepega
 
 NOT COMPATIBLE WITH NGSP, PR, SP...
 
-YOU NEED MY TERA-SHARED-STATE MOD FOR THIS TO WORK!!
+YOU NEED MY TERA-SHARED-STATE MOD FOR THIS TO WORK!! (Still need it)
 
-command: wui -> open mod UI
+Command: wui -> open mod UI (Works)
 
-use warrior basic attack to do the rotation (includes smart prevention to not use brooch, gamble, root, ult if not close to boss...)
+use warrior basic attack to do the rotation (includes smart prevention to not use brooch, gamble, root, ult if not close to boss...) (Works)
 
-speeds up all animations and ends them faster.
+Speeds up all animations and ends them faster. (Works, but bad)
