@@ -4,7 +4,7 @@ Fixed version of this error: "Cannot read property '17010402' of undefined"
 
 NOT COMPATIBLE WITH NGSP, PR, SP...
 
-YOU NEED MY TERA-SHARED-STATE MOD FOR THIS TO WORK!! (Still need it)
+YOU NEED "gh.c/salchyy/shared-tera-state" MOD FOR THIS TO WORK..! (Still need it)
 
 Command: wui -> open mod UI (Works)
 
