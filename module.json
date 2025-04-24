@@ -11,9 +11,9 @@
         "reloadable": true,
         "settingsFile": "config.json",
         "settingsMigrator": "settings_migrator.js",
-        "settingsVersion": 1		
+        "settingsVersion": 1.1		
 	},
     "servers": [""],
     "supportUrl": "",
-    "version": "<font color='#00FFFF'>1.0.0</font>"
+    "version": "<font color='#00FFFF'>1.1.0</font>"
 }
